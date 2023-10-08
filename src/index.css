@@ -1,0 +1,38 @@
+.quintuple-container {
+    border: solid;
+    display: flex;
+}
+
+.quintuple-item {
+    display: flex;
+    flex-direction: column;
+    border: solid green;
+    justify-content: space-between;
+    flex-grow: 1;
+    height: 300px;
+}
+
+.state,
+.initial-state,
+.alphabet,
+.final-states {
+    border: solid sandybrown;
+    height: 50%;
+}
+
+.state-initialstate-wraper {
+    display: flex;
+    flex-direction: column;
+}
+
+.state,
+.initial-state {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.quintuple-title {
+    /* text-align: center; */
+}
