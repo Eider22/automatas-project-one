@@ -18,6 +18,7 @@
 .final-states {
     border: solid sandybrown;
     height: 50%;
+    overflow-y: scroll;
 }
 
 .state-initialstate-wraper {
@@ -35,4 +36,10 @@
 
 .quintuple-title {
     /* text-align: center; */
+}
+
+.inputState-buttonState-wraper {
+    border: solid lawngreen;
+    display: flex;
+    flex-direction: column;
 }
