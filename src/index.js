@@ -1,3 +1,4 @@
+import { intersection } from "./scripts/operations/Intersection.js";
 import { complement } from "./scripts/operations/complement.js";
 import { reverse } from "./scripts/operations/reverse.js";
 import { union } from "./scripts/operations/union.js";
@@ -13,7 +14,7 @@ const data = {
 d.addEventListener('DOMContentLoaded', () => {
     const buttonStateSelector = "#buttonState";
 
-    const automataOne = {
+    let automataOne = {
         states: ["B", "D", "E", "F", "Z"],
         aphabet: [],
         initialState: "B",
@@ -37,6 +38,88 @@ d.addEventListener('DOMContentLoaded', () => {
 
     reverse(automataOne);
 
+
+
+    automataOne = {
+        states: ["A", "B", "D"],
+        alphabet: [1, 0],
+        initialState: "A",
+        finalStates: ["B", "D"],
+        functions: [
+            {
+                source: "A",
+                target: "B",
+                transition: [1]
+            },
+            {
+                source: "B",
+                target: "D",
+                transition: [1]
+            },
+            {
+                source: "A",
+                target: "A",
+                transition: [0]
+            },
+            {
+                source: "D",
+                target: "A",
+                transition: [0]
+            },
+            {
+                source: "B",
+                target: "B",
+                transition: [0]
+            },
+            {
+                source: "D",
+                target: "D",
+                transition: [1]
+            },
+        ]
+    };
+    
+    let automataTwo = {
+        states: ["X", "Y", "Z"],
+        alphabet: [0, 1],
+        initialState: "X",
+        finalStates: ["Z"],
+        functions: [
+            {
+                source: "X",
+                target: "Y",
+                transition: [0]
+            },
+            {
+                source: "Y",
+                target: "Z",
+                transition: [1]
+            },
+            {
+                source: "X",
+                target: "X",
+                transition: [1]
+            },
+            {
+                source: "Y",
+                target: "Y",
+                transition: [0]
+            },
+            {
+                source: "Z",
+                target: "Y",
+                transition: [1]
+            },
+            {
+                source: "z",
+                target: "z",
+                transition: [0]
+            },
+        ]
+    };
+
+    console.log("Intersection: ",intersection(automataOne, automataTwo))
+    console.log("Union: ",union(automataOne, automataTwo))
     events.captureInput(buttonStateSelector);
 })
 

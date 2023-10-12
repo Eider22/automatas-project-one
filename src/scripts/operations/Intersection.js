@@ -1,82 +1,4 @@
-const automataOne = {
-    states: ["A", "B", "D"],
-    alphabet: [1, 0],
-    initialState: "A",
-    finalStates: ["B", "D"],
-    functions: [
-        {
-            source: "A",
-            target: "B",
-            transition: 1
-        },
-        {
-            source: "B",
-            target: "D",
-            transition: 1
-        },
-        {
-            source: "A",
-            target: "A",
-            transition: 0
-        },
-        {
-            source: "D",
-            target: "A",
-            transition: 0
-        },
-        {
-            source: "B",
-            target: "B",
-            transition: 0
-        },
-        {
-            source: "D",
-            target: "D",
-            transition: 1
-        },
-    ]
-};
-
-const automataTwo = {
-    states: ["X", "Y", "Z"],
-    alphabet: [0,1],
-    initialState: "X",
-    finalStates: ["Z"],
-    functions: [
-        {
-            source: "X",
-            target: "Y",
-            transition: 0
-        },
-        {
-            source: "Y",
-            target: "Z",
-            transition: 1
-        },
-        {
-            source: "X",
-            target: "X",
-            transition: 1
-        },
-        {
-            source: "Y",
-            target: "Y",
-            transition: 0
-        },
-        {
-            source: "Z",
-            target: "Y",
-            transition: 1
-        },
-        {
-            source: "z",
-            target: "z",
-            transition: 0
-        },
-    ]
-};
-
-export const Intersection = (automataOne,automataTwo)=>{
+export const intersection = (automataOne, automataTwo) => {
     const { states: statesOne, alphabet: alphabetOne, initialState: initialStateOne, finalStates: finalStatesOne, functions: functionsOne } = automataOne;
     const { states: statesTwo, alphabet: alphabetTwo, initialState: initialStateTwo, finalStates: finalStatesTwo, functions: functionsTwo } = automataTwo;
 
@@ -92,8 +14,8 @@ export const Intersection = (automataOne,automataTwo)=>{
 
     const newStates = [];
 
-    for(const eAutomO of statesOne ){
-        for (const eAutoT of statesTwo){
+    for (const eAutomO of statesOne) {
+        for (const eAutoT of statesTwo) {
             newStates.push(eAutomO + eAutoT);
         }
     }
@@ -120,7 +42,7 @@ export const Intersection = (automataOne,automataTwo)=>{
      */
     const newFinalStates = [];
     for (const stateOne of finalStatesOne) {
-        for ( const stateTwo of finalStatesTwo) {
+        for (const stateTwo of finalStatesTwo) {
             newFinalStates.push(stateOne + stateTwo);
         }
     }
@@ -139,8 +61,8 @@ export const Intersection = (automataOne,automataTwo)=>{
             const sourceStateOne = stateOneN.substr(0, 1); //
             const sourceStateTwo = stateOneN.substr(1, 1);
 
-            const targetStateOne = functionsOne.find(func => func.source === sourceStateOne && func.transition === symbol)?.target;
-            const targetStateTwo = functionsTwo.find(func => func.source === sourceStateTwo && func.transition === symbol)?.target;
+            const targetStateOne = functionsOne.find(func => func.source === sourceStateOne && func.transition.includes(symbol))?.target;
+            const targetStateTwo = functionsTwo.find(func => func.source === sourceStateTwo && func.transition.includes(symbol))?.target;
 
             if (targetStateOne && targetStateTwo) {
                 const targetState = targetStateOne + targetStateTwo;
