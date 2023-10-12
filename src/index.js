@@ -1,3 +1,5 @@
+import { complement } from "./scripts/operations/complement.js";
+import { reverse } from "./scripts/operations/reverse.js";
 import { union } from "./scripts/operations/union.js";
 import { addState, getStates } from "./scripts/states.js";
 
@@ -10,7 +12,31 @@ const data = {
 
 d.addEventListener('DOMContentLoaded', () => {
     const buttonStateSelector = "#buttonState";
-    
+
+    const automataOne = {
+        states: ["B", "D", "E", "F", "Z"],
+        aphabet: [],
+        initialState: "B",
+        finalStates: ["B", "D"],
+        functions: [
+            {
+                source: "A",
+                target: "B",
+                transition: [2, 5]
+            },
+            {
+                source: "B",
+                target: "D",
+                transition: [1, 4]
+            },
+        ]
+
+    }
+    const comp = complement(automataOne);
+    console.log(comp);
+
+    reverse(automataOne);
+
     events.captureInput(buttonStateSelector);
 })
 
@@ -29,7 +55,7 @@ const events = {
                     const splitElements = data.inptuStateSelector.split('-');
                     data.inptuStateSelector = splitElements[0] + "-" + data.counter;
 
-                    
+
                     inputStateElement.disabled = true;
                     factory.createInputState();
                     console.log(getStates())
