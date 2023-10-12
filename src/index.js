@@ -33,10 +33,8 @@ d.addEventListener('DOMContentLoaded', () => {
         ]
 
     }
-    const comp = complement(automataOne);
-    console.log(comp);
 
-    reverse(automataOne);
+    // reverse(automataOne);
 
 
 
@@ -78,7 +76,7 @@ d.addEventListener('DOMContentLoaded', () => {
             },
         ]
     };
-    
+
     let automataTwo = {
         states: ["X", "Y", "Z"],
         alphabet: [0, 1],
@@ -118,8 +116,113 @@ d.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
-    console.log("Intersection: ",intersection(automataOne, automataTwo))
-    console.log("Union: ",union(automataOne, automataTwo))
+    console.log("Intersection: ", intersection(automataOne, automataTwo))
+    console.log("Union: ", union(automataOne, automataTwo))
+
+
+
+    automataOne = {
+        states: ["B", "D", "E", "F", "Z"],
+        aphabet: [],
+        initialState: "B",
+        finalStates: ["B", "D"],
+        functions: [
+            {
+                source: "A",
+                target: "B",
+                transition: [2, 5]
+            },
+            {
+                source: "B",
+                target: "D",
+                transition: [1, 4]
+            },
+        ]
+
+    }
+    const comp = complement(automataOne);
+    console.log(comp);
+
+
+
+    // automataOne = {
+    //     states: ["A", "B", "C", "D"],
+    //     alphabet: [1, 0],
+    //     initialState: "A",
+    //     finalStates: ["C"],
+    //     functions: [
+    //         {
+    //             source: "A",
+    //             target: "B",
+    //             transition: [0]
+    //         },
+    //         {
+    //             source: "B",
+    //             target: "C",
+    //             transition: [0]
+    //         },
+    //         {
+    //             source: "C",
+    //             target: "C",
+    //             transition: [0,1]
+    //         },
+    //         {
+    //             source: "A",
+    //             target: "D",
+    //             transition: [1]
+    //         },
+    //         {
+    //             source: "B",
+    //             target: "D",
+    //             transition: [1]
+    //         },
+    //         {
+    //             source: "D",
+    //             target: "D",
+    //             transition: [0,1]
+    //         },
+    //     ]
+    // };
+    // console.log("reverse: ",reverse(automataOne))
+    automataOne = {
+        states: ["A", "B", "C", "D"],
+        alphabet: [1, 0],
+        initialState: "A",
+        finalStates: ["A", "B", "D"],
+        functions: [
+            {
+                source: "A",
+                target: "B",
+                transition: [0]
+            },
+            {
+                source: "B",
+                target: "C",
+                transition: [0]
+            },
+            {
+                source: "C",
+                target: "C",
+                transition: [0, 1]
+            },
+            {
+                source: "A",
+                target: "D",
+                transition: [1]
+            },
+            {
+                source: "B",
+                target: "D",
+                transition: [1]
+            },
+            {
+                source: "D",
+                target: "D",
+                transition: [0, 1]
+            },
+        ]
+    };
+    console.log("reverse: ", reverse(automataOne))
     events.captureInput(buttonStateSelector);
 })
 
