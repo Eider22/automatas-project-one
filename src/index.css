@@ -27,18 +27,15 @@
 }
 
 .state,
-.initial-state {
+.initial-state,
+.alphabet {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.quintuple-title {
-    /* text-align: center; */
-}
-
-.inputState-buttonState-wraper {
+.inputState-buttonState-wraper, .inputAlphabet-buttonAlphabet-wraper {
     border: solid lawngreen;
     display: flex;
     flex-direction: column;

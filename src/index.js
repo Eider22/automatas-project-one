@@ -2,252 +2,99 @@ import { intersection } from "./scripts/operations/Intersection.js";
 import { complement } from "./scripts/operations/complement.js";
 import { reverse } from "./scripts/operations/reverse.js";
 import { union } from "./scripts/operations/union.js";
-import { addState, getStates } from "./scripts/states.js";
 
 const d = document;
-
 const data = {
-    inptuStateSelector: "inputState-0",
+    buttonAddStateElement: {
+        element: {},
+        idSelector: ""
+    },
+    buttonAddAlphabetlement: {
+        element: {},
+        idSelector: ""
+    },
+    inputAddStateElement: {
+        element: {},
+        idSelector: ""
+    },
+    inputAddAlphabetElement: {
+        element: {},
+        idSelector: ""
+    },
+    seletcInitialStateElement: {
+        element: {},
+        idSelector: "",
+        value: ""
+    },
     counter: 0,
+    automata: {
+        states: [],
+        alphabet: [],
+        initialState: "",
+        finalStates: [],
+        functions: []
+    }
 }
 
 d.addEventListener('DOMContentLoaded', () => {
-    const buttonStateSelector = "#buttonState";
-
-    let automataOne = {
-        states: ["B", "D", "E", "F", "Z"],
-        aphabet: [],
-        initialState: "B",
-        finalStates: ["B", "D"],
-        functions: [
-            {
-                source: "A",
-                target: "B",
-                transition: [2, 5]
-            },
-            {
-                source: "B",
-                target: "D",
-                transition: [1, 4]
-            },
-        ]
-
-    }
-
-    // reverse(automataOne);
-
-
-
-    automataOne = {
-        states: ["A", "B", "D"],
-        alphabet: [1, 0],
-        initialState: "A",
-        finalStates: ["B", "D"],
-        functions: [
-            {
-                source: "A",
-                target: "B",
-                transition: [1]
-            },
-            {
-                source: "B",
-                target: "D",
-                transition: [1]
-            },
-            {
-                source: "A",
-                target: "A",
-                transition: [0]
-            },
-            {
-                source: "D",
-                target: "A",
-                transition: [0]
-            },
-            {
-                source: "B",
-                target: "B",
-                transition: [0]
-            },
-            {
-                source: "D",
-                target: "D",
-                transition: [1]
-            },
-        ]
-    };
-
-    let automataTwo = {
-        states: ["X", "Y", "Z"],
-        alphabet: [0, 1],
-        initialState: "X",
-        finalStates: ["Z"],
-        functions: [
-            {
-                source: "X",
-                target: "Y",
-                transition: [0]
-            },
-            {
-                source: "Y",
-                target: "Z",
-                transition: [1]
-            },
-            {
-                source: "X",
-                target: "X",
-                transition: [1]
-            },
-            {
-                source: "Y",
-                target: "Y",
-                transition: [0]
-            },
-            {
-                source: "Z",
-                target: "Y",
-                transition: [1]
-            },
-            {
-                source: "z",
-                target: "z",
-                transition: [0]
-            },
-        ]
-    };
-
-    console.log("Intersection: ", intersection(automataOne, automataTwo))
-    console.log("Union: ", union(automataOne, automataTwo))
-
-
-
-    automataOne = {
-        states: ["B", "D", "E", "F", "Z"],
-        aphabet: [],
-        initialState: "B",
-        finalStates: ["B", "D"],
-        functions: [
-            {
-                source: "A",
-                target: "B",
-                transition: [2, 5]
-            },
-            {
-                source: "B",
-                target: "D",
-                transition: [1, 4]
-            },
-        ]
-
-    }
-    const comp = complement(automataOne);
-    console.log(comp);
-
-
-
-    // automataOne = {
-    //     states: ["A", "B", "C", "D"],
-    //     alphabet: [1, 0],
-    //     initialState: "A",
-    //     finalStates: ["C"],
-    //     functions: [
-    //         {
-    //             source: "A",
-    //             target: "B",
-    //             transition: [0]
-    //         },
-    //         {
-    //             source: "B",
-    //             target: "C",
-    //             transition: [0]
-    //         },
-    //         {
-    //             source: "C",
-    //             target: "C",
-    //             transition: [0,1]
-    //         },
-    //         {
-    //             source: "A",
-    //             target: "D",
-    //             transition: [1]
-    //         },
-    //         {
-    //             source: "B",
-    //             target: "D",
-    //             transition: [1]
-    //         },
-    //         {
-    //             source: "D",
-    //             target: "D",
-    //             transition: [0,1]
-    //         },
-    //     ]
-    // };
-    // console.log("reverse: ",reverse(automataOne))
-    automataOne = {
-        states: ["A", "B", "C", "D"],
-        alphabet: [1, 0],
-        initialState: "A",
-        finalStates: ["A", "B", "D"],
-        functions: [
-            {
-                source: "A",
-                target: "B",
-                transition: [0]
-            },
-            {
-                source: "B",
-                target: "C",
-                transition: [0]
-            },
-            {
-                source: "C",
-                target: "C",
-                transition: [0, 1]
-            },
-            {
-                source: "A",
-                target: "D",
-                transition: [1]
-            },
-            {
-                source: "B",
-                target: "D",
-                transition: [1]
-            },
-            {
-                source: "D",
-                target: "D",
-                transition: [0, 1]
-            },
-        ]
-    };
-    console.log("reverse: ", reverse(automataOne))
-    events.captureInput(buttonStateSelector);
+    OnInit();
 })
 
-
-
-
 const events = {
-    captureInput: (buttonSelector) => {
-        const buttonStateElement = d.querySelector(buttonSelector);
+    captureStatesInput: () => {
 
-        buttonStateElement.addEventListener('click', (e) => {
-            let inputStateElement = d.querySelector("#" + data.inptuStateSelector);
-            if (inputStateElement.value) {
-                if (addState(inputStateElement.value)) {
+        data.buttonAddStateElement.element.addEventListener('click', (e) => {
+            const inputAddStateElement = data.inputAddStateElement.element;
+            if (inputAddStateElement.value) {
+                if (addState(inputAddStateElement.value)) {
                     data.counter++;
-                    const splitElements = data.inptuStateSelector.split('-');
-                    data.inptuStateSelector = splitElements[0] + "-" + data.counter;
+                    const splitElements = data.inputAddStateElement.idSelector.split('-');
+                    data.inputAddStateElement.idSelector = splitElements[0] + "-" + data.counter;
 
 
-                    inputStateElement.disabled = true;
+                    inputAddStateElement.disabled = true;
                     factory.createInputState();
-                    console.log(getStates())
+
+                    /**Añadir el estado como opción del select de estado inicial */
+                    const optionElement = d.createElement("option");
+                    optionElement.value = inputAddStateElement.value;
+                    optionElement.text = inputAddStateElement.value;
+                    data.seletcInitialStateElement.element.appendChild(optionElement);
                 }
 
             }
+        })
+    },
+
+    captureAlphabetInput: () => {
+
+        data.buttonAddAlphabetlement.element.addEventListener('click', (e) => {
+            const inputAddAlphabetElement = data.inputAddAlphabetElement.element;
+            if (inputAddAlphabetElement.value) {
+                if (addAlphabet(inputAddAlphabetElement.value)) {
+                    data.counter++;
+                    const splitElements = data.inputAddAlphabetElement.idSelector.split('-');
+                    data.inputAddAlphabetElement.idSelector = splitElements[0] + "-" + data.counter;
+
+
+                    inputAddAlphabetElement.disabled = true;
+                    factory.createInputAlphabet();
+                    console.log(data.automata)
+                }
+
+            }
+        })
+    },
+
+    captureInitialState: () => {
+        const element = data.seletcInitialStateElement.element;
+        element.addEventListener('change', (e) => {
+            if (element.value == "0") {
+                data.automata.initialState = "";
+                console.log(data.automata)
+                return;
+            }
+            data.automata.initialState = element.value;
         })
     }
 }
@@ -256,8 +103,80 @@ const events = {
 const factory = {
     createInputState: () => {
         const input = d.createElement("input")
-        input.id = data.inptuStateSelector;
+        input.id = data.inputAddStateElement.idSelector;
         const inputStateButtonStateWraper = d.querySelector(".inputState-buttonState-wraper");
         inputStateButtonStateWraper.appendChild(input);
+        data.inputAddStateElement.element = input;
+    },
+    createInputAlphabet: () => {
+        const input = d.createElement("input")
+        input.id = data.inputAddAlphabetElement.idSelector;
+        const inputAlphabetButtonStateWraper = d.querySelector(".inputAlphabet-buttonAlphabet-wraper");
+        inputAlphabetButtonStateWraper.appendChild(input);
+        data.inputAddAlphabetElement.element = input;
     }
+}
+
+const OnInit = () => {
+    uploadInitialData();
+    events.captureStatesInput();
+    events.captureInitialState();
+    events.captureAlphabetInput();
+}
+
+
+const uploadInitialData = () => {
+    data.buttonAddStateElement = { element: {}, idSelector: "buttonAddState" };
+    data.inputAddStateElement = {
+        element: {},
+        idSelector: "inputState-0"
+    };
+    data.seletcInitialStateElement = { element: {}, idSelector: "initialState", value: "" };
+    data.buttonAddAlphabetlement = { element: {}, idSelector: "buttonAddAlphabet", value: "" }
+    data.inputAddAlphabetElement = {
+        element: {},
+        idSelector: "inputAlphabet-0"
+    };
+    data.counter = 0;
+    uploadElementsToData();
+}
+
+
+const uploadElementsToData = () => {
+    const buttonAddStateElement = d.getElementById(data.buttonAddStateElement.idSelector);
+    const seletcInitialStateElement = d.getElementById(data.seletcInitialStateElement.idSelector);
+    const buttonAddAlphabetlement = d.getElementById(data.buttonAddAlphabetlement.idSelector);
+    const inputAddAlphabetElement = d.getElementById(data.inputAddAlphabetElement.idSelector);
+    const inputAddStateElement = d.getElementById(data.inputAddStateElement.idSelector);
+
+
+    data.buttonAddStateElement.element = buttonAddStateElement;
+    data.seletcInitialStateElement.element = seletcInitialStateElement;
+    data.buttonAddAlphabetlement.element = buttonAddAlphabetlement;
+    data.inputAddAlphabetElement.element = inputAddAlphabetElement;
+    data.inputAddStateElement.element = inputAddStateElement;
+}
+
+const addState = (newState) => {
+    const stateExist = data.automata.states.find((state) => state === newState);
+    if (stateExist) {
+        console.log("El estado ya existe")
+        return false;
+    }
+    data.automata.states.push(newState);
+    return true;
+}
+
+const addAlphabet = (newAlphabet) => {
+    const alphabetExist = data.automata.alphabet.find((a) => a === newAlphabet);
+    if (alphabetExist) {
+        console.log("El alfabeto ya existe")
+        return false;
+    }
+    data.automata.alphabet.push(newAlphabet);
+    return true;
+}
+
+const getStates = () => {
+    return data.automata.states;
 }
