@@ -16,8 +16,8 @@
         <div class="quintuple-item state-initialstate-wraper">
             <div class="state">
                 <h3 class="quintuple-title">Estados</h3>
-                <div class="inputState-buttonState-wraper">
-                    <button id="buttonAddState" >Agregar</button>
+                <div class="inputState-buttonState-wraper" id="inputStateButtonStateWraper">
+                    <button id="buttonAddState">Agregar</button>
                     <input type="text" id="inputState-0">
                 </div>
             </div>
@@ -30,23 +30,50 @@
                 </div>
             </div>
         </div>
-        
+
         <!--Cuadrante 2-->
         <div class="quintuple-item">
             <div class="alphabet">
                 <h3 class="alphabet-title">Alfabeto</h3>
-                <div class="inputAlphabet-buttonAlphabet-wraper">
-                    <button id="buttonAddAlphabet" >Agregar</button>
+                <div class="inputAlphabet-buttonAlphabet-wraper" id="inputAlphabetButtonAlphabetWraper">
+                    <button id="buttonAddAlphabet">Agregar</button>
                     <input type="text" id="inputAlphabet-0">
                 </div>
             </div>
-            <div class="final-states"></div>
+            <div class="final-states">
+                <h3 class="finalState-title">Estado final</h3>
+                <div class="selectFinalStates-buttonFinalStates-wraper" id="selectFinalStatesButtonFinalStatesWraper">
+                    <button id="buttonAddFinalStates">Agregar</button>
+                    <select name="finalStates" id="selectFinalStates-0">
+                        <option value="0" selected>---Seleccione un estado---</option>
+                    </select>
+                </div>
+
+            </div>
         </div>
         <!--Cuadrante 3-->
         <div class="quintuple-item"></div>
         <!--Cuadrante 4-->
-        <div class="quintuple-item"></div>
+        <div class="quintuple-item plus-container" id="plusContainer">
+            <div class="addAutomata" id="plusWrapper"><span class="plus">+</span></div>
+        </div>
 
+    </div>
+
+    <div class="table-inputs-container">
+        <table class="table-inputs">
+            <thead class="table-inputs-head">
+                <tr>
+                    <th>Estados</th>
+                    <th>Alfabeto</th>
+                    <th>Funciones de transición</th>
+                    <th>Estado inicial</th>
+                    <th>Estados finales</th>
+                </tr>
+            </thead>
+            <tbody class="table-inputs-body" id="tableInputsBody">                
+            </tbody>
+        </table>
     </div>
 </body>
 
