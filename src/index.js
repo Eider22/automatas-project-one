@@ -55,7 +55,7 @@ const data = {
         idSelector: "",
         value: ""
     },
-    
+
     inputAlphabetButtonAlphabetWraper: {
         element: {},
         idSelector: "",
@@ -63,6 +63,12 @@ const data = {
     },
 
     selectFinalStatesButtonFinalStatesWraper: {
+        element: {},
+        idSelector: "",
+        value: ""
+    },
+
+    initialStateWrapper: {
         element: {},
         idSelector: "",
         value: ""
@@ -179,6 +185,7 @@ const uploadInitialData = () => {
     data.inputStateButtonStateWraperElement = { element: {}, idSelector: "inputStateButtonStateWraper", value: "" }
     data.inputAlphabetButtonAlphabetWraper = { element: {}, idSelector: "inputAlphabetButtonAlphabetWraper", value: "" }
     data.selectFinalStatesButtonFinalStatesWraper = { element: {}, idSelector: "selectFinalStatesButtonFinalStatesWraper", value: "" }
+    data.initialStateWrapper = { element: {}, idSelector: "initialStateWrapper", value: "" }
 
     data.plusWrapper = { element: {}, idSelector: "plusWrapper", value: "" }
     data.counter = 0;
@@ -197,6 +204,7 @@ const uploadElementsToData = () => {
     const inputStateButtonStateWraperElement = d.getElementById(data.inputStateButtonStateWraperElement.idSelector);
     const inputAlphabetButtonAlphabetWraper = d.getElementById(data.inputAlphabetButtonAlphabetWraper.idSelector);
     const selectFinalStatesButtonFinalStatesWraper = d.getElementById(data.selectFinalStatesButtonFinalStatesWraper.idSelector);
+    const initialStateWrapper = d.getElementById(data.initialStateWrapper.idSelector);
 
 
     data.buttonAddStateElement.element = buttonAddStateElement;
@@ -210,6 +218,7 @@ const uploadElementsToData = () => {
     data.inputStateButtonStateWraperElement.element = inputStateButtonStateWraperElement;
     data.inputAlphabetButtonAlphabetWraper.element = inputAlphabetButtonAlphabetWraper;
     data.selectFinalStatesButtonFinalStatesWraper.element = selectFinalStatesButtonFinalStatesWraper;
+    data.initialStateWrapper.element = initialStateWrapper;
 }
 
 const events = {
@@ -317,27 +326,27 @@ const events = {
             e.stopPropagation();
             if (data.currentAutomata.states.length == 0) {
                 console.log("Debes agregar por lo menos un estado")
-                // return;
+                return;
             }
 
             if (data.currentAutomata.initialState.length == 0) {
                 console.log("Debes agregar un estado inicial")
-                // return;
+                return;
             }
 
             if (data.currentAutomata.initialState.length > 1) {
                 console.log("Debes agregar solo un estado inicial")
-                // return;
+                return;
             }
 
             if (data.currentAutomata.finalStates.length == 0) {
                 console.log("Debes agregar por lo menos un estado final")
-                // return;
+                return;
             }
 
             if (data.currentAutomata.alphabet.length == 0) {
                 console.log("Debes agregar por lo menos un elemento al alfabeto")
-                // return;
+                return;
             }
 
             data.automatas.push(data.currentAutomata);
@@ -451,7 +460,8 @@ const addAutomataTotable = () => {
     render.renderPlus();
     render.renderAlphabet();
     render.renderFinalState();
-    clearData();    
+    render.renderInitialState();
+    clearData();
     runEvents();
 }
 
@@ -468,18 +478,18 @@ const render = {
         while (plusContainer.firstChild) {
             plusContainer.removeChild(plusContainer.firstChild);
         }
-        
+
         const plusWraper = d.createElement("div");
         plusWraper.className = "addAutomata";
         plusWraper.id = "plusWrapper";
         const span = d.createElement("span");
         span.className = "plus";
         span.textContent = "+";
-        
+
         plusWraper.appendChild(span);
         plusContainer.appendChild(plusWraper);
     },
-    
+
     renderStates: () => {
         // all states
         while (data.inputStateButtonStateWraperElement.element.firstChild) {
@@ -497,7 +507,7 @@ const render = {
 
         data.inputStateButtonStateWraperElement.element.appendChild(buttonAddState)
         data.inputStateButtonStateWraperElement.element.appendChild(inputAddState)
-    }, 
+    },
     renderAlphabet: () => {
         // Alphabet
         while (data.inputAlphabetButtonAlphabetWraper.element.firstChild) {
@@ -545,7 +555,32 @@ const render = {
         selectAddFinalStates.appendChild(optiontAddFinalStates);
 
         data.selectFinalStatesButtonFinalStatesWraper.element.appendChild(buttonAddFinalStates)
-        data.selectFinalStatesButtonFinalStatesWraper.element.appendChild(selectAddFinalStates);        
+        data.selectFinalStatesButtonFinalStatesWraper.element.appendChild(selectAddFinalStates);
 
+    },
+
+    renderInitialState: () => {
+        // InitianState
+        while (data.initialStateWrapper.element.firstChild) {
+            data.initialStateWrapper.element.removeChild(data.initialStateWrapper.element.firstChild);
+        }
+
+       
+        //             <select name="initialState" id="initialState">
+        //                 <option value="0" selected>---Seleccione un estado---</option>
+        //             </select>
+
+        const selectInitialState = d.createElement("select");
+        selectInitialState.name = "initialState";
+        selectInitialState.id = "initialState";
+
+        const optiontAddInitialState = d.createElement("option");
+        optiontAddInitialState.value = "0";
+        optiontAddInitialState.selected = true;
+        optiontAddInitialState.textContent = "---Seleccione un estado---";
+
+        selectInitialState.appendChild(optiontAddInitialState);
+
+        data.initialStateWrapper.element.appendChild(selectInitialState)
     }
 }
