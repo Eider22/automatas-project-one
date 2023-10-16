@@ -71,15 +71,15 @@ export const union = (automataOne, automataTwo) => {
             const sourceStateOne = stateOneN.substr(0, 1); //
             const sourceStateTwo = stateOneN.substr(1, 1);
 
-            const targetStateOne = functionsOne.find(func => func.source === sourceStateOne && func.transition.includes(symbol))?.target;
-            const targetStateTwo = functionsTwo.find(func => func.source === sourceStateTwo && func.transition.includes(symbol))?.target;
+            const targetStateOne = functionsOne.find(func => func.source === sourceStateOne && func.transitions.includes(symbol))?.target;
+            const targetStateTwo = functionsTwo.find(func => func.source === sourceStateTwo && func.transitions.includes(symbol))?.target;
 
             if (targetStateOne && targetStateTwo) {
                 const targetState = targetStateOne + targetStateTwo;
                 newFunctions.push({
                     source: stateOneN,
                     target: targetState,
-                    transition: symbol
+                    transitions: symbol
                 });
             }
         }

@@ -28,6 +28,11 @@ const data = {
         idSelector: "",
         value: ""
     },
+    buttonAddFunction: {
+        element: {},
+        idSelector: "",
+        value: ""
+    },
     plusWrapper: {
         element: {},
         idSelector: "",
@@ -43,7 +48,27 @@ const data = {
         idSelector: "",
         value: ""
     },
+    sourceState: {
+        element: {},
+        idSelector: "",
+        value: ""
+    },
+    targetState: {
+        element: {},
+        idSelector: "",
+        value: ""
+    },
+    selectTransition: {
+        element: {},
+        idSelector: "",
+        value: ""
+    },
     tableInputsBody: {
+        element: {},
+        idSelector: "",
+        value: ""
+    },
+    tableOutputContainer: {
         element: {},
         idSelector: "",
         value: ""
@@ -74,6 +99,38 @@ const data = {
         value: ""
     },
 
+    functionsContainer: {
+        element: {},
+        idSelector: "",
+        value: ""
+    },
+
+    functionSelectedWrapper: {
+        element: {},
+        idSelector: "",
+        value: ""
+    },
+    unionButton: {
+        element: {},
+        idSelector: "",
+        value: ""
+    },
+    intersectionButton: {
+        element: {},
+        idSelector: "",
+        value: ""
+    },
+    complementButton: {
+        element: {},
+        idSelector: "",
+        value: ""
+    },
+    reverseButton: {
+        element: {},
+        idSelector: "",
+        value: ""
+    },
+
     counter: 0,
     currentAutomata: {
         id: null,
@@ -84,6 +141,7 @@ const data = {
         functions: []
     },
     automatas: [],
+    selectedAutomatas: [],
     idcounter: 0,
 }
 
@@ -102,7 +160,13 @@ const runEvents = () => {
     events.captureAlphabet();
     events.captureFinalState();
     events.addAutomata();
+    events.addTransition();
+    events.unionEvent();
+    events.intersectionEvent();
+    events.complementEvent();
+    events.reverseEvent();
 }
+
 const factory = {
     createInputState: () => {
         const input = d.createElement("input")
@@ -160,6 +224,9 @@ const uploadInitialData = () => {
     data.inputAddStateElement.element.value = "";
     data.inputAddAlphabetElement.element.value = "";
     data.seletcInitialStateElement.element.value = "0"
+    data.sourceState.element.value = "0"
+    data.targetState.element.value = "0"
+    data.selectTransition.element.value = ""
 
     data.counter = 0;
 
@@ -181,11 +248,22 @@ const uploadInitialData = () => {
 
     data.buttonAddFinalStatesElement = { element: {}, idSelector: "buttonAddFinalStates", value: "" }
     data.selectFinalStatesElement = { element: {}, idSelector: "selectFinalStates-0", value: "" }
+    data.buttonAddFunction = { element: {}, idSelector: "buttonAddFunction", value: "" }
 
     data.inputStateButtonStateWraperElement = { element: {}, idSelector: "inputStateButtonStateWraper", value: "" }
     data.inputAlphabetButtonAlphabetWraper = { element: {}, idSelector: "inputAlphabetButtonAlphabetWraper", value: "" }
     data.selectFinalStatesButtonFinalStatesWraper = { element: {}, idSelector: "selectFinalStatesButtonFinalStatesWraper", value: "" }
     data.initialStateWrapper = { element: {}, idSelector: "initialStateWrapper", value: "" }
+    data.functionsContainer = { element: {}, idSelector: "functionsContainer", value: "" }
+    data.functionSelectedWrapper = { element: {}, idSelector: "functionSelectedWrapper", value: "" }
+    data.sourceState = { element: {}, idSelector: "sourceState", value: "" }
+    data.targetState = { element: {}, idSelector: "targetState", value: "" }
+    data.selectTransition = { element: {}, idSelector: "selectTransition", value: "" }
+    data.tableOutputContainer = { element: {}, idSelector: "tableOutputContainer", value: "" }
+    data.reverseButton = { element: {}, idSelector: "reverse", value: "" }
+    data.complementButton = { element: {}, idSelector: "complement", value: "" }
+    data.intersectionButton = { element: {}, idSelector: "intersection", value: "" }
+    data.unionButton = { element: {}, idSelector: "union", value: "" }
 
     data.plusWrapper = { element: {}, idSelector: "plusWrapper", value: "" }
     data.counter = 0;
@@ -205,6 +283,17 @@ const uploadElementsToData = () => {
     const inputAlphabetButtonAlphabetWraper = d.getElementById(data.inputAlphabetButtonAlphabetWraper.idSelector);
     const selectFinalStatesButtonFinalStatesWraper = d.getElementById(data.selectFinalStatesButtonFinalStatesWraper.idSelector);
     const initialStateWrapper = d.getElementById(data.initialStateWrapper.idSelector);
+    const sourceState = d.getElementById(data.sourceState.idSelector);
+    const targetState = d.getElementById(data.targetState.idSelector);
+    const selectTransition = d.getElementById(data.selectTransition.idSelector);
+    const buttonAddFunction = d.getElementById(data.buttonAddFunction.idSelector);
+    const functionSelectedWrapper = d.getElementById(data.functionSelectedWrapper.idSelector);
+    const functionsContainer = d.getElementById(data.functionsContainer.idSelector);
+    const reverseButton = d.getElementById(data.reverseButton.idSelector);
+    const complementButton = d.getElementById(data.complementButton.idSelector);
+    const intersectionButton = d.getElementById(data.intersectionButton.idSelector);
+    const unionButton = d.getElementById(data.unionButton.idSelector);
+    const tableOutputContainer = d.getElementById(data.tableOutputContainer.idSelector);
 
 
     data.buttonAddStateElement.element = buttonAddStateElement;
@@ -219,6 +308,17 @@ const uploadElementsToData = () => {
     data.inputAlphabetButtonAlphabetWraper.element = inputAlphabetButtonAlphabetWraper;
     data.selectFinalStatesButtonFinalStatesWraper.element = selectFinalStatesButtonFinalStatesWraper;
     data.initialStateWrapper.element = initialStateWrapper;
+    data.sourceState.element = sourceState;
+    data.targetState.element = targetState;
+    data.selectTransition.element = selectTransition;
+    data.buttonAddFunction.element = buttonAddFunction;
+    data.functionSelectedWrapper.element = functionSelectedWrapper;
+    data.functionsContainer.element = functionsContainer;
+    data.reverseButton.element = reverseButton;
+    data.complementButton.element = complementButton;
+    data.intersectionButton.element = intersectionButton;
+    data.unionButton.element = unionButton;
+    data.tableOutputContainer.element = tableOutputContainer;
 }
 
 const events = {
@@ -244,6 +344,9 @@ const events = {
                     data.seletcInitialStateElement.element.appendChild(optionElement);
 
                     updateFinalStates(inputAddStateElement.value);
+                    updateSourceTransition(inputAddStateElement.value);
+                    updateTargetTransition(inputAddStateElement.value);
+
 
 
 
@@ -275,6 +378,9 @@ const events = {
 
                     inputAddAlphabetElement.disabled = true;
                     factory.createInputAlphabet();
+
+
+                    updateTransition(inputAddAlphabetElement.value);
                     console.log(data.currentAutomata)
                 }
 
@@ -322,7 +428,6 @@ const events = {
     },
     addAutomata: () => {
         data.plusWrapper.element.addEventListener('click', (e) => {
-            console.log("ADD")
             e.stopPropagation();
             if (data.currentAutomata.states.length == 0) {
                 console.log("Debes agregar por lo menos un estado")
@@ -349,6 +454,11 @@ const events = {
                 return;
             }
 
+            if (data.currentAutomata.functions.length == 0) {
+                console.log("Debes agregar las transiciones del autómata")
+                return;
+            }
+
             data.automatas.push(data.currentAutomata);
 
 
@@ -357,7 +467,115 @@ const events = {
 
             console.log("data.automatas ", data.automatas)
         })
-    }
+    },
+
+    addTransition: () => {
+        const buttonAddFunction = data.buttonAddFunction.element;
+        buttonAddFunction.addEventListener("click", (e) => {
+            const sourceStateElement = data.sourceState.element;
+            const targetStateElement = data.targetState.element;
+            const transitionElement = data.selectTransition.element;
+
+            if (sourceStateElement.value == "0" ||
+                targetStateElement.value == "0" ||
+                transitionElement.value == "") {
+                console.log("Debes seleccionar por lo menos una fuente, un destino y una transición ");
+                return;
+            }
+
+
+            /**Validar si ya existe esa función en el autómata */
+            const functionExist = data.currentAutomata.functions.find((f) => f.source == sourceStateElement.value &&
+                f.target == targetStateElement.value);
+
+            if (functionExist) {
+                const transitionExist = functionExist.transitions.find(transition => transition == transitionElement.value);
+                if (transitionExist) {
+                    console.log("La función ya existe")
+                    return;
+                }
+                functionExist.transitions.push(transitionElement.value)
+                renderFunction(sourceStateElement.value, transitionElement.value, targetStateElement.value);
+                console.log("actual 1 ", data.currentAutomata)
+                return;
+            }
+
+            const newFunction = {
+                source: sourceStateElement.value,
+                target: targetStateElement.value,
+                transitions: [...transitionElement.value]
+            };
+
+            data.currentAutomata.functions.push(newFunction);
+
+            renderFunction(sourceStateElement.value, transitionElement.value, targetStateElement.value);
+            console.log("actual 2 ", data.currentAutomata)
+        })
+    },
+
+    unionEvent: () => {
+
+        data.unionButton.element.addEventListener('click', (e) => {
+            if (data.selectedAutomatas.length < 2) {
+                console.log("Debes seleccionar dos autómatas")
+                return;
+            }
+            const automataOne = data.selectedAutomatas[0];
+            const automataTwo = data.selectedAutomatas[1];
+            const unionResult = union(automataOne, automataTwo);
+            console.log("automataOne: ", automataOne)
+            console.log("automataTwo: ", automataTwo)
+            console.log("result: ", unionResult)
+            renderOutputAutomata(unionResult);
+        })
+    },
+
+    intersectionEvent: () => {
+        data.intersectionButton.element.addEventListener('click', (e) => {
+            if (data.selectedAutomatas.length < 2) {
+                console.log("Debes seleccionar dos autómatas")
+                return;
+            }
+
+            const automataOne = data.selectedAutomatas[0];
+            const automataTwo = data.selectedAutomatas[1];
+            const intersectionResult = intersection(automataOne, automataTwo);
+            console.log("automataOne: ", automataOne)
+            console.log("automataTwo: ", automataTwo)
+            console.log("result: ", intersectionResult)
+            renderOutputAutomata(intersectionResult);
+        })
+    },
+
+    complementEvent: () => {
+
+        data.complementButton.element.addEventListener('click', (e) => {
+            if (data.selectedAutomatas.length != 1) {
+                console.log("Debes seleccionar un autómatas")
+                return;
+            }
+            const automata = data.selectedAutomatas[0];
+            const complementResult = complement(automata);
+            console.log("automata: ", automata)
+            console.log("result: ", complementResult)
+            renderOutputAutomata(complementResult);
+        })
+    },
+    reverseEvent: () => {
+
+        data.reverseButton.element.addEventListener('click', (e) => {
+            if (data.selectedAutomatas.length != 1) {
+                console.log("Debes seleccionar un autómatas")
+                return;
+            }
+            const automata = data.selectedAutomatas[0];
+            const reverseResult = reverse(automata);
+            console.log("automata: ", automata)
+            console.log("result: ", reverseResult)
+            renderOutputAutomata(reverseResult);
+        })
+    },
+
 }
 
 const updateFinalStates = (newState) => {
@@ -367,6 +585,35 @@ const updateFinalStates = (newState) => {
     option.value = newState;
     option.text = newState;
     data.selectFinalStatesElement.element.appendChild(option);
+
+}
+const updateSourceTransition = (newState) => {
+    const sourceState = data.sourceState.element;
+
+    const option = d.createElement("option");
+    option.value = newState;
+    option.text = newState;
+    data.sourceState.element.appendChild(option);
+
+}
+
+const updateTargetTransition = (newState) => {
+    const targetState = data.targetState.element;
+
+    const option = d.createElement("option");
+    option.value = newState;
+    option.text = newState;
+    data.targetState.element.appendChild(option);
+
+}
+
+const updateTransition = (newSTransition) => {
+    const selectTransition = data.selectTransition.element;
+
+    const option = d.createElement("option");
+    option.value = newSTransition;
+    option.text = newSTransition;
+    data.selectTransition.element.appendChild(option);
 
 }
 
@@ -410,6 +657,60 @@ const addAutomataTotable = () => {
            */
     const tableBody = d.getElementById("tableInputsBody");
     let row = d.createElement("tr");
+    /**Seleccionar */
+    let selectTd = d.createElement("td");
+    let buttonSelect = d.createElement("button");
+    buttonSelect.value = data.currentAutomata.id;
+    buttonSelect.textContent = "Seleccionar"
+
+    buttonSelect.addEventListener("click", (e) => {
+        // TODO
+        let automataId = e.target.value;
+        const automata = data.automatas.find(a => a.id == automataId);
+
+
+        if (data.selectedAutomatas.length == 2) {
+            console.log("No puedes seleccionar más autómatas")
+            return;
+        }
+
+        data.selectedAutomatas.push(automata)
+        console.log("data.selectedAutomatas → ", data.selectedAutomatas);
+    })
+    selectTd.appendChild(buttonSelect);
+    row.appendChild(selectTd);
+
+    /**Eliminar */
+    let deletTd = d.createElement("td");
+    let buttonDelet = d.createElement("button");
+    buttonDelet.value = data.currentAutomata.id;
+    buttonDelet.textContent = "Eliminar"
+
+    buttonDelet.addEventListener("click", (e) => {
+        // TODO
+        let automataId = e.target.value;
+        if (data.selectedAutomatas.length == 0) {
+            console.log("No hay autómatas para eliminar")
+            return;
+        }
+
+        const automataExist = data.selectedAutomatas.find(a => a.id == automataId);
+
+        if (!automataExist) {
+            console.log("No existe el autómata para eliminar")
+            return;
+        }
+
+        data.selectedAutomatas = data.selectedAutomatas.filter(a => a.id != automataId);
+
+
+        console.log("data.selectedAutomatas → ", data.selectedAutomatas);
+    })
+
+    deletTd.appendChild(buttonDelet);
+    row.appendChild(deletTd);
+
+
     /**Estados */
     let statesConcat = "";
     data.currentAutomata.states.forEach(state => {
@@ -433,6 +734,14 @@ const addAutomataTotable = () => {
 
     /**Funciones de transición */
     let tdITransitionFunctions = d.createElement("td");
+
+    data.currentAutomata.functions.forEach(f => {
+        f.transitions.forEach(t => {
+            let functionString = factoryRenderFunction(f.source, t, f.target);
+            tdITransitionFunctions.textContent += `${functionString};`;
+        })
+    })
+
     row.appendChild(tdITransitionFunctions);
 
 
@@ -461,8 +770,14 @@ const addAutomataTotable = () => {
     render.renderAlphabet();
     render.renderFinalState();
     render.renderInitialState();
+    render.renderFunctions();
     clearData();
-    runEvents();
+    events.captureStates();
+    events.captureInitialState();
+    events.captureAlphabet();
+    events.captureFinalState();
+    events.addAutomata();
+    events.addTransition();
 }
 
 
@@ -565,7 +880,7 @@ const render = {
             data.initialStateWrapper.element.removeChild(data.initialStateWrapper.element.firstChild);
         }
 
-       
+
         //             <select name="initialState" id="initialState">
         //                 <option value="0" selected>---Seleccione un estado---</option>
         //             </select>
@@ -582,5 +897,103 @@ const render = {
         selectInitialState.appendChild(optiontAddInitialState);
 
         data.initialStateWrapper.element.appendChild(selectInitialState)
+    },
+    renderFunctions: () => {
+        // Functions
+        while (data.functionsContainer.element.firstChild) {
+            data.functionsContainer.element.removeChild(data.functionsContainer.element.firstChild);
+        }
+
+        const template = document.getElementById("template");
+        const clone = document.importNode(template.content, true);
+
+        data.functionsContainer.element.appendChild(clone);
+    },
+
+}
+
+
+const renderFunction = (source, transition, target) => {
+    // functionSelectedWrapper
+    const functionSelectedWrapper = data.functionSelectedWrapper.element;
+
+    const div = d.createElement("div");
+    div.textContent = factoryRenderFunction(source, transition, target);
+
+    functionSelectedWrapper.appendChild(div);
+
+}
+// f(A,2)=B
+const factoryRenderFunction = (source, transition, target) => {
+    let output = `f(${source}, ${transition})=${target}`
+    return output;
+}
+
+
+const renderOutputAutomata = (automata) => {
+    let stringFunctions = "";
+
+    automata.functions.forEach(f => {
+        f.transitions.forEach(t => {
+            let functionString = factoryRenderFunction(f.source, t, f.target);
+            stringFunctions += `${functionString};`;
+        })
+    })
+
+    let stringStates = "";
+    automata.states.forEach(s => {
+        stringStates += `${s},`
+    })
+
+    let stringFinalStates = "";
+    automata.finalStates.forEach(s => {
+        stringFinalStates += `${s},`
+    })
+
+    let stringAlphabet = "";
+    automata.alphabet.forEach(a => {
+        stringAlphabet += `${a},`
+    })
+
+    let initialState = automata.initialState;
+
+
+    const row = d.createElement("tr");
+
+    const tdStates = d.createElement("td");
+    tdStates.textContent = stringStates;
+
+    const tdAlphabet = d.createElement("td");
+    tdAlphabet.textContent = stringAlphabet;
+
+    const tdFinalState = d.createElement("td");
+    tdFinalState.textContent = stringFinalStates;
+
+    const tdFunctions = d.createElement("td");
+    tdFunctions.textContent = stringFunctions;
+
+    const tdInitialState = d.createElement("td");
+    tdInitialState.textContent = initialState;
+
+    row.appendChild(tdStates)
+    row.appendChild(tdAlphabet)
+    row.appendChild(tdFunctions)
+    row.appendChild(tdInitialState)
+    row.appendChild(tdFinalState)
+
+
+    while (data.tableOutputContainer.element.firstChild) {
+        data.tableOutputContainer.element.removeChild(data.tableOutputContainer.element.firstChild);
     }
+
+    const template = document.getElementById("tableOutputTemplate");
+    const clone = document.importNode(template.content, true);
+
+    const tableBody = clone.getElementById("tableoutputBody");
+
+    tableBody.appendChild(row);
+
+    data.tableOutputContainer.element.appendChild(clone);
+
+
 }

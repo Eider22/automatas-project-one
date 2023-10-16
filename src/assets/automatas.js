@@ -9,32 +9,32 @@ export const automatasToreverseTests =
             {
                 source: "A",
                 target: "B",
-                transition: [0]
+                transitions: [0]
             },
             {
                 source: "B",
                 target: "C",
-                transition: [0]
+                transitions: [0]
             },
             {
                 source: "C",
                 target: "C",
-                transition: [0, 1]
+                transitions: [0, 1]
             },
             {
                 source: "A",
                 target: "D",
-                transition: [1]
+                transitions: [1]
             },
             {
                 source: "B",
                 target: "D",
-                transition: [1]
+                transitions: [1]
             },
             {
                 source: "D",
                 target: "D",
-                transition: [0, 1]
+                transitions: [0, 1]
             },
         ]
     }

@@ -54,7 +54,34 @@
             </div>
         </div>
         <!--Cuadrante 3-->
-        <div class="quintuple-item"></div>
+        <div class="quintuple-item functions-container" id="functionsContainer">
+            <!-- <template> -->
+            <h3 class="functions-title">Funciones</h3>
+            <div class="block-functions">
+                <div class="block-functions-head">
+                    <div>I</div>
+                    <div>F</div>
+                </div>
+                <div class="block-functions-body">
+                    <div class="block-functions-body-head">
+                        <select name="sourceState" id="sourceState">
+                            <option value="0" selected>---Seleccione origen---</option>
+                        </select>
+                        <select name="targetState" id="targetState">
+                            <option value="0" selected>---Seleccione destino---</option>
+                        </select>
+                    </div>
+                    <div class="block-functions-body-body">
+                        <select name="" id="selectTransition">
+                            <option value="" selected>---Seleccione una transición---</option>
+                        </select>
+                        <button id="buttonAddFunction">Agregar</button>
+                    </div>
+                </div>
+            </div>
+            <!-- </template> -->
+            <div class="function-selected" id="functionSelectedWrapper"></div>
+        </div>
         <!--Cuadrante 4-->
         <div class="quintuple-item plus-container" id="plusContainer">
             <div class="addAutomata" id="plusWrapper"><span class="plus">+</span></div>
@@ -62,10 +89,21 @@
 
     </div>
 
+    <div class="table-output-container" id="tableOutputContainer"></div>
+
+    <div class="operationsContainer">
+        <button id="union">Unión</button>
+        <button id="intersection">Intersección</button>
+        <button id="complement">Complemento</button>
+        <button id="reverse">Reverso</button>
+    </div>
+
     <div class="table-inputs-container">
         <table class="table-inputs">
             <thead class="table-inputs-head">
                 <tr>
+                    <th>Seleccionar</th>
+                    <th>Eliminar</th>
                     <th>Estados</th>
                     <th>Alfabeto</th>
                     <th>Funciones de transición</th>
@@ -77,6 +115,52 @@
             </tbody>
         </table>
     </div>
+
+
+    <template id="template">
+        <h3 class="functions-title">Funciones</h3>
+        <div class="block-functions">
+            <div class="block-functions-head">
+                <div>I</div>
+                <div>F</div>
+            </div>
+            <div class="block-functions-body">
+                <div class="block-functions-body-head">
+                    <select name="sourceState" id="sourceState">
+                        <option value="0" selected>---Seleccione origen---</option>
+                    </select>
+                    <select name="targetState" id="targetState">
+                        <option value="0" selected>---Seleccione destino---</option>
+                    </select>
+                </div>
+                <div class="block-functions-body-body">
+                    <select name="" id="selectTransition">
+                        <option value="" selected>---Seleccione una transición---</option>
+                    </select>
+                    <button id="buttonAddFunction">Agregar</button>
+                </div>
+            </div>
+        </div>
+        <div class="function-selected" id="functionSelectedWrapper"></div>
+    </template>
+
+    <template id="tableOutputTemplate">
+        <table class="table-output">
+            <thead class="table-output-head">
+                <tr>
+                    <th>Estados</th>
+                    <th>Alfabeto</th>
+                    <th>Funciones de transición</th>
+                    <th>Estado inicial</th>
+                    <th>Estados finales</th>
+                </tr>
+            </thead>
+            <tbody class="table-output-body" id="tableoutputBody">
+            </tbody>
+        </table>
+    </template>
 </body>
+
+
 
 </html>
