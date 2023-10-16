@@ -145,3 +145,8 @@ td {
 .result-title{
     margin-bottom: 1rem;
 }
+
+.selected {
+    background-color: #3498db; /* Puedes reemplazar '#3498db' con el color que desees */
+    color: white; /* Cambia el color del texto si es necesario */
+}

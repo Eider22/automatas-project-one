@@ -56,20 +56,29 @@ export const intersection = (automataOne, automataTwo) => {
     */
 
     const newFunctions = [];
+
     for (const stateOneN of newStates) {
         for (const symbol of newAlphabet) {
-            const sourceStateOne = stateOneN.substr(0, 1); //
+            const sourceStateOne = stateOneN.substr(0, 1); 
             const sourceStateTwo = stateOneN.substr(1, 1);
 
             const targetStateOne = functionsOne.find(func => func.source === sourceStateOne && func.transitions.includes(symbol))?.target;
             const targetStateTwo = functionsTwo.find(func => func.source === sourceStateTwo && func.transitions.includes(symbol))?.target;
 
-            if (targetStateOne && targetStateTwo) {
-                const targetState = targetStateOne + targetStateTwo;
+            const existingFunction = newFunctions.find(func => func.source === sourceStateOne && func.target === sourceStateTwo);
+
+            if (existingFunction) {
+                // Verificar si la transición es diferente y agregarla
+                if (!existingFunction.transitions.includes(symbol)) {
+                    existingFunction.transitions.push(symbol);
+                }
+            } else {
+                // Si no existe, crear una nueva entrada en newFunctions
+                const targetState = targetStateOne+targetStateTwo;
                 newFunctions.push({
                     source: stateOneN,
                     target: targetState,
-                    transitions: symbol
+                    transitions: [symbol]
                 });
             }
         }

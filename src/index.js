@@ -393,7 +393,7 @@ const events = {
         data.buttonAddFinalStatesElement.element.addEventListener('click', (e) => {
             const selectFinalStatesElement = data.selectFinalStatesElement.element;
             if (selectFinalStatesElement.value == 0) {
-                console.log("Elija un estado");
+                alert("Elija un estado");
                 return;
             }
 
@@ -430,32 +430,32 @@ const events = {
         data.plusWrapper.element.addEventListener('click', (e) => {
             e.stopPropagation();
             if (data.currentAutomata.states.length == 0) {
-                console.log("Debes agregar por lo menos un estado")
+                alert("Debes agregar por lo menos un estado")
                 return;
             }
 
             if (data.currentAutomata.initialState.length == 0) {
-                console.log("Debes agregar un estado inicial")
+                alert("Debes agregar un estado inicial")
                 return;
             }
 
             if (data.currentAutomata.initialState.length > 1) {
-                console.log("Debes agregar solo un estado inicial")
+                alert("Debes agregar solo un estado inicial")
                 return;
             }
 
             if (data.currentAutomata.finalStates.length == 0) {
-                console.log("Debes agregar por lo menos un estado final")
+                alert("Debes agregar por lo menos un estado final")
                 return;
             }
 
             if (data.currentAutomata.alphabet.length == 0) {
-                console.log("Debes agregar por lo menos un elemento al alfabeto")
+                alert("Debes agregar por lo menos un elemento al alfabeto")
                 return;
             }
 
             if (data.currentAutomata.functions.length == 0) {
-                console.log("Debes agregar las transiciones del autómata")
+                alert("Debes agregar las transiciones del autómata")
                 return;
             }
 
@@ -479,7 +479,7 @@ const events = {
             if (sourceStateElement.value == "0" ||
                 targetStateElement.value == "0" ||
                 transitionElement.value == "") {
-                console.log("Debes seleccionar por lo menos una fuente, un destino y una transición ");
+                alert("Debes seleccionar por lo menos una fuente, un destino y una transición ");
                 return;
             }
 
@@ -491,7 +491,7 @@ const events = {
             if (functionExist) {
                 const transitionExist = functionExist.transitions.find(transition => transition == transitionElement.value);
                 if (transitionExist) {
-                    console.log("La función ya existe")
+                    alert("La función ya existe")
                     return;
                 }
                 functionExist.transitions.push(transitionElement.value)
@@ -513,11 +513,11 @@ const events = {
         })
     },
 
-    unionEvent: () => {
+    /**unionEvent: () => {
 
         data.unionButton.element.addEventListener('click', (e) => {
             if (data.selectedAutomatas.length < 2) {
-                console.log("Debes seleccionar dos autómatas")
+                alert("Debes seleccionar dos autómatas")
                 return;
             }
             const automataOne = data.selectedAutomatas[0];
@@ -527,13 +527,48 @@ const events = {
             console.log("automataTwo: ", automataTwo)
             console.log("result: ", unionResult)
             renderOutputAutomata(unionResult);
+
         })
+    },*/
+
+    unionEvent: () => {
+        const unionButton = document.getElementById('union');
+        const intersectionButton = document.getElementById('intersection');
+        const complementButton = document.getElementById('complement');
+        const reverseButton = document.getElementById('reverse');
+    
+        unionButton.addEventListener('click', (e) => {
+            // Lógica para el botón de unión
+            if (data.selectedAutomatas.length < 2) {
+                alert("Debes seleccionar dos autómatas");
+                return;
+            }
+            const automataOne = data.selectedAutomatas[0];
+            const automataTwo = data.selectedAutomatas[1];
+            const unionResult = union(automataOne, automataTwo);
+            console.log("automataOne: ", automataOne);
+            console.log("automataTwo: ", automataTwo);
+            console.log("result: ", unionResult);
+            renderOutputAutomata(unionResult);
+
+            unionButton.style.backgroundColor = '#00BFBF'; 
+            intersectionButton.style.backgroundColor = '';
+            complementButton.style.backgroundColor = '';
+            reverseButton.style.backgroundColor = '';
+        });
     },
+    
 
     intersectionEvent: () => {
+
+        const unionButton = document.getElementById('union');
+        const intersectionButton = document.getElementById('intersection');
+        const complementButton = document.getElementById('complement');
+        const reverseButton = document.getElementById('reverse');
+
         data.intersectionButton.element.addEventListener('click', (e) => {
             if (data.selectedAutomatas.length < 2) {
-                console.log("Debes seleccionar dos autómatas")
+                alert("Debes seleccionar dos autómatas")
                 return;
             }
 
@@ -544,14 +579,25 @@ const events = {
             console.log("automataTwo: ", automataTwo)
             console.log("result: ", intersectionResult)
             renderOutputAutomata(intersectionResult);
+
+        
+            unionButton.style.backgroundColor = ''; 
+            intersectionButton.style.backgroundColor = '#00BFBF';
+            complementButton.style.backgroundColor = '';
+            reverseButton.style.backgroundColor = '';
         })
     },
 
     complementEvent: () => {
 
+        const unionButton = document.getElementById('union');
+        const intersectionButton = document.getElementById('intersection');
+        const complementButton = document.getElementById('complement');
+        const reverseButton = document.getElementById('reverse');
+
         data.complementButton.element.addEventListener('click', (e) => {
             if (data.selectedAutomatas.length != 1) {
-                console.log("Debes seleccionar un autómatas")
+                alert("Debes seleccionar un autómatas")
                 return;
             }
             const automata = data.selectedAutomatas[0];
@@ -559,13 +605,24 @@ const events = {
             console.log("automata: ", automata)
             console.log("result: ", complementResult)
             renderOutputAutomata(complementResult);
+
+            unionButton.style.backgroundColor = ''; 
+            intersectionButton.style.backgroundColor = '';
+            complementButton.style.backgroundColor = '#00BFBF';
+            reverseButton.style.backgroundColor = '';
         })
     },
+
     reverseEvent: () => {
+
+        const unionButton = document.getElementById('union');
+        const intersectionButton = document.getElementById('intersection');
+        const complementButton = document.getElementById('complement');
+        const reverseButton = document.getElementById('reverse');
 
         data.reverseButton.element.addEventListener('click', (e) => {
             if (data.selectedAutomatas.length != 1) {
-                console.log("Debes seleccionar un autómatas")
+                alert("Debes seleccionar un autómatas")
                 return;
             }
             const automata = data.selectedAutomatas[0];
@@ -573,6 +630,11 @@ const events = {
             console.log("automata: ", automata)
             console.log("result: ", reverseResult)
             renderOutputAutomata(reverseResult);
+
+            unionButton.style.backgroundColor = ''; 
+            intersectionButton.style.backgroundColor = '';
+            complementButton.style.backgroundColor = '';
+            reverseButton.style.backgroundColor = '#00BFBF';
         })
     },
 
@@ -620,7 +682,7 @@ const updateTransition = (newSTransition) => {
 const addState = (newState) => {
     const stateExist = data.currentAutomata.states.find((state) => state === newState);
     if (stateExist) {
-        console.log("El estado ya existe")
+        alert("El estado ya existe")
         return false;
     }
     data.currentAutomata.states.push(newState);
@@ -630,7 +692,7 @@ const addState = (newState) => {
 const addAlphabet = (newAlphabet) => {
     const alphabetExist = data.currentAutomata.alphabet.find((a) => a === newAlphabet);
     if (alphabetExist) {
-        console.log("El alfabeto ya existe")
+        alert("El alfabeto ya existe")
         return false;
     }
     data.currentAutomata.alphabet.push(newAlphabet);
@@ -640,7 +702,7 @@ const addAlphabet = (newAlphabet) => {
 const addFinalState = (newState) => {
     const stateExist = data.currentAutomata.finalStates.find((a) => a === newState);
     if (stateExist) {
-        console.log("El estado final ya existe")
+        alert("El estado final ya existe")
         return false;
     }
     data.currentAutomata.finalStates.push(newState);
@@ -670,7 +732,7 @@ const addAutomataTotable = () => {
 
 
         if (data.selectedAutomatas.length == 2) {
-            console.log("No puedes seleccionar más autómatas")
+            alert("No puedes seleccionar más autómatas")
             return;
         }
 
@@ -690,14 +752,14 @@ const addAutomataTotable = () => {
         // TODO
         let automataId = e.target.value;
         if (data.selectedAutomatas.length == 0) {
-            console.log("No hay autómatas para eliminar")
+            alert("No hay autómatas para eliminar")
             return;
         }
 
         const automataExist = data.selectedAutomatas.find(a => a.id == automataId);
 
         if (!automataExist) {
-            console.log("No existe el autómata para eliminar")
+            alert("No existe el autómata para eliminar")
             return;
         }
 
@@ -994,6 +1056,5 @@ const renderOutputAutomata = (automata) => {
     tableBody.appendChild(row);
 
     data.tableOutputContainer.element.appendChild(clone);
-
 
 }
