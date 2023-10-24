@@ -1,3 +1,4 @@
+import { automatasToreverseTests } from "./assets/automatas.js";
 import { intersection } from "./scripts/operations/Intersection.js";
 import { complement } from "./scripts/operations/complement.js";
 import { reverse } from "./scripts/operations/reverse.js";
@@ -146,6 +147,7 @@ const data = {
 }
 
 d.addEventListener('DOMContentLoaded', () => {
+    console.log(reverse(automatasToreverseTests.one));
     OnInit();
 })
 

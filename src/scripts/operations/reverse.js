@@ -88,7 +88,7 @@ const insertLambdas = (automata, newState) => {
             {
                 source: fs,
                 target: newState,
-                transition: ["Lambda"]
+                transitions: ["Lambda"]
             }
         )
     })
